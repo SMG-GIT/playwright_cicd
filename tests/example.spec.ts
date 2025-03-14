@@ -7,7 +7,7 @@ test('has title', async ({ page }) => {
   await expect(page).toHaveTitle(/Playwright/);
 });
 
-test('get started link', async ({ page }) => {
+test('get started link', async ({ page },testInfo) => {
   await page.goto('https://playwright.dev/');
 
   // Click the get started link.
@@ -15,5 +15,6 @@ test('get started link', async ({ page }) => {
 
   // Expects page to have a heading with the name of Installation.
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-  await page.screenshot({path:"screenshot.png",fullPage:true});
+  const screenshot = await page.screenshot({path:"screenshot.png",fullPage:true});
+  await testInfo.attach('screenshot', { body: screenshot, contentType: 'image/png' });
 });
